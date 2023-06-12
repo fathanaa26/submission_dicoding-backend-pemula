@@ -33,8 +33,6 @@ const post_books = (req, h) => {
         updatedAt,
     }
 
-    books.push(noted)
-
     const isNameFilled = name === '' || name === undefined ? true : false
     const isReadPageValid = readPage <= pageCount ? true : false
 
@@ -56,6 +54,8 @@ const post_books = (req, h) => {
         return res
     }
 
+    books.push(noted)
+
     const res = h.response({
         status:'success',
         message:"Buku berhasil ditambahkan",
@@ -67,14 +67,19 @@ const post_books = (req, h) => {
     return res
 }
 
+
 const getall_books = (req,h)=>{
 
     const slice = books.slice(0,2)
     let show_books = []
 
-    slice.forEach(({id,name,publisher})=>{
-        show_books.push({id,name,publisher})
-    })
+    for(let i=0; i<slice.length; i++){
+        show_books.push({
+                id:slice[i].id,
+                name:slice[i].name,
+                publisher:slice[i].publisher
+        })
+    }
 
     const res = h.response({
         status:'success',
